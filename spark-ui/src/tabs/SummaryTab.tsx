@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import BuildIcon from "@mui/icons-material/Build";
-import { Box, Fade, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, Fade, IconButton, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import SqlFlow from "../components/SqlFlow/SqlFlow";
 import SqlTable from "../components/SqlTable/SqlTable";
@@ -58,6 +58,9 @@ export default function SummaryTab() {
 
   const tableDisplay = selectedSqlId === undefined ? "flex" : "none";
 
+  const isSmallScreen = useMediaQuery('(max - width: 600px)');
+  const widthValue = isSmallScreen? '400px' : '800px';
+
   return (
     <div style={{ overflow: "hidden", height: "100%" }}>
       <Fade timeout={300} in={selectedSqlId === undefined} style={{}}>
@@ -105,7 +108,12 @@ export default function SummaryTab() {
               alignItems="center"
               alignContent="center"
             >
-              <Typography variant="h5">
+              <Typography variant="h5" style={{
+                width: widthValue,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
                 query {selectedSql?.id}: {selectedSql?.description}
               </Typography>
             </Box>

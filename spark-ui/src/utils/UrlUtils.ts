@@ -29,8 +29,14 @@ export function hrefWithoutEndSlash(): string {
 
 export const getProxyBasePath = (): string => {
   const url = new URL(window.location.href);
-  const pathToRemove = /\/history\/[^/]+\/dataflint\/?$/;
-  return url.origin + url.pathname.replace(pathToRemove, '');
+  if (url.pathname.includes("history")) {
+    const pathToRemove = /\/history\/[^/]+\/dataflint\/?$/;
+    return url.origin + url.pathname.replace(pathToRemove, '');
+  }
+  return hrefWithoutEndSlash().substring(
+      0,
+      hrefWithoutEndSlash().lastIndexOf("/dataflint"),
+  );
 };
 
 export function getHistoryServerCurrentAppId(): string {
